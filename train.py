@@ -67,7 +67,7 @@ if __name__ == '__main__':
 
     ## Initialize optimizer
     trainEpochs = 15
-    optimizer = torch.optim.Adam(net.parameters())  # lr = ...
+    optimizer = torch.optim.Adam(net.parameters())  
     batch_size = 128
     crossEnt = torch.nn.BCELoss()  # binary cross entropy
 
