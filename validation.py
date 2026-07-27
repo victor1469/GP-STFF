@@ -142,3 +142,58 @@ if __name__ == '__main__':
 
     print('Total training time: ', end_time - start_time)
    
+
+---
+
+### Step-by-Step Workflow
+
+#### 1. Historical Trajectory Data Collection
+First, historical trajectory data of the ego vehicle (target vehicle) are extracted across the highway segment over the predefined observation horizon ($T_{obs}$). 
+
+<div align="center">
+  <img src="assets/fig1.png" width="80%" alt="Fig 1: Target Vehicle Historical Trajectory Collection">
+  <p><i>Figure 1: Extraction of historical trajectory points for the target vehicle on the road section.</i></p>
+</div>
+
+---
+
+#### 2. Surroundings Perception & Multi-Vehicle Radar Sensing
+On-board sensors (e.g., radar, LiDAR) collect spatial context and historical motion trajectories from surrounding traffic agents within the local grid interaction area.
+
+<div align="center">
+  <img src="assets/fig2.png" width="80%" alt="Fig 2: Surroundings Radar Sensing">
+  <p><i>Figure 2: Perception field capturing surrounding vehicles' historical movement patterns via vehicle radar.</i></p>
+</div>
+
+---
+
+#### 3. Spatial-Temporal Feature Fusion & Model Inference
+The collected spatial-temporal sequences are processed using the trained **GP-STFF** architecture[cite: 1]. The positional graph ($G_{GP}$) combines topological graph distances with learnable position encodings ($PE$), while the selected Spatial-Temporal Feature Fusion (selected-STFF) module extracts cross-modal interactions to forecast future states over the prediction horizon ($T_{pred}$)[cite: 1].
+
+<div align="center">
+  <img src="assets/fig3.png" width="90%" alt="Fig 3: GP-STFF Model Architecture">
+  <p><i>Figure 3: Structural diagram of the trained GP-STFF prediction model.</i></p>
+</div>
+
+---
+
+#### 4. Future Trajectory Forecasting & Visualization
+The decoder outputs sequence-level future trajectory coordinates ($\hat{Y}$), which are rendered onto the spatial domain to demonstrate lane-keeping, lane-changing, and speed variation behaviors.
+
+<div align="center">
+  <img src="assets/fig4.png" width="80%" alt="Fig 4: Visualized Trajectory Prediction Result">
+  <p><i>Figure 4: Visualized trajectory prediction outputs for target and surrounding traffic agents.</i></p>
+</div>
+
+---
+
+#### 5. Density Estimation & Probability Distribution Analysis
+To quantify prediction uncertainty and multi-modal trajectory distributions, fine-grained spatio-temporal features are analyzed using spatial heatmaps and positional probability density point maps.
+
+<div align="center">
+  <p align="center">
+    <img src="assets/fig5.png" width="48%" alt="Fig 5: Spatial Trajectory Heatmap">
+    <img src="assets/fig6.png" width="48%" alt="Fig 6: Probability Density Distribution">
+  </p>
+  <p><i>Figure 5 & Figure 6: Spatial trajectory uncertainty heatmaps (left) and predicted trajectory probability density distribution maps (right).</i></p>
+</div>
