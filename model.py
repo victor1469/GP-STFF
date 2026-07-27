@@ -124,7 +124,7 @@ class highwayNet(nn.Module):
         v = self.linear_v(lstm_out).reshape(batch, n, nh, dv).transpose(1, 2)
 
         dist = torch.matmul(q, k.transpose(2, 3)) * self.norm_fact
-        dist = torch.softmax(dist, dim=-1) #128, 4, 16, 16
+        dist = torch.softmax(dist, dim=-1)
         att = torch.matmul(dist, v)
         att = att.transpose(1, 2).reshape(batch, n, self.dim_v)  #128， 16， 64
         new_hidden = att.permute(0, 2, 1)
